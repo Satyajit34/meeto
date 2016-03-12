@@ -1,42 +1,29 @@
 package JavaProject;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-
 import java.awt.CardLayout;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
 import java.awt.Font;
-
-import javax.swing.JTextArea;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JFormattedTextField;
-import javax.swing.JList;
-
 import java.util.ArrayList;
 import java.awt.List;
-
-
+import java.io.IOException;
 
 public class Jframe {
-
 	private JFrame frame;
 	private JTextField textField_1;
 	public JPanel frame1;
 	public JPanel frame2;
 	static String groups;
 	static String area;
-	int a = 0;
+	int a=0 ;
 	ArrayList<String> str = new ArrayList<String>();
 	
 	public static void main(String[] args) {
@@ -53,16 +40,11 @@ public class Jframe {
 		});
 	}
 
-	
 	public Jframe() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 505, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,11 +55,12 @@ public class Jframe {
 		frame1.setLayout(null);
 		
 		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(231, 42, 39, 20);
+		formattedTextField.setBounds(327, 35, 60, 36);
 		frame1.add(formattedTextField);		
 		
-		JLabel New = new JLabel("How Big is Your Group");
-		New.setBounds(10, 27, 141, 50);
+		JLabel New = new JLabel("How Big is Your Group-");
+		New.setFont(new Font("Stencil", Font.PLAIN, 18));
+		New.setBounds(10, 27, 242, 50);
 		frame1.add(New);
 		
 		JButton btnNewButton = new JButton("Go");
@@ -87,9 +70,8 @@ public class Jframe {
 				groups = formattedTextField.getText();
 				if(Utility.numberOrNot(groups) != true)
 				{
-					System.out.println("Is not a number");
+					JOptionPane.showMessageDialog(null, "Please Enter A Numeric Value!!!"); 
 				}
-				//else if(groups == )
 				else
 				{
 					frame1.setVisible(false);
@@ -109,12 +91,23 @@ public class Jframe {
 					textField_1.setColumns(10);
 					textField_1.setUI(new HintTextFieldUI("Write your area", true));
 					
+					JButton btnBack = new JButton("Back");
+					btnBack.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							frame1.setVisible(true);
+							frame2.setVisible(false);
+						}
+					});
+					btnBack.setBounds(328, 227, 96, 23);
+					frame2.add(btnBack);
+										
 					int i, loop = Integer.parseInt(groups);
 					System.out.println(loop);
 					List list = new List();
 					list.setBounds(39, 95, 240, 124);
 					frame2.add(list);
-					for(i = 0; i < loop; i++)	{
+					
+					for(i = 0; i < loop; ++i)	{
 						JButton btnA = new JButton("ADD");
 						btnA.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -143,23 +136,25 @@ public class Jframe {
 					JButton btnNewButton_1 = new JButton("Locate On Map");
 					btnNewButton_1.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							if(a <= loop)
+							if(a < loop)
 							{
 								JOptionPane.showMessageDialog(frame,
-									    "Only " + a + " locations selected! Select " + (loop - a) + " more!",
+									    "Only " + a + " locations selected! Select " + (loop -1) + " more!",
 									    "Location Error",
 									    JOptionPane.ERROR_MESSAGE);
 							}
 							else
 							{
-								GoogleMap gMap = new GoogleMap();
-								try {
-									gMap.initMap(str);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}	
+								AddressConverter obj = new AddressConverter();
+									int i;
+									for(i = 0; i < str.size(); i++)
+										try {
+											obj.fetchLatLong(str.get(i));
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+							}
 						}
 					});
 					btnNewButton_1.setBounds(301, 150, 123, 36);
@@ -168,7 +163,7 @@ public class Jframe {
 				}	
 			}
 		});
-		btnNewButton.setBounds(62, 88, 89, 23);
+		btnNewButton.setBounds(209, 133, 89, 23);
 		frame1.add(btnNewButton);
 		
 		
@@ -198,6 +193,14 @@ public class Jframe {
 		List list = new List();
 		list.setBounds(39, 95, 240, 124);
 		frame2.add(list);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnBack.setBounds(328, 227, 96, 23);
+		frame2.add(btnBack);
 		
 		//till here
 	}

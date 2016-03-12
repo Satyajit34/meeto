@@ -1,28 +1,17 @@
-<!DOCTYPE html>
 <html>
-<head>
-   <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-   <style type="text/css">
-       html { height: 100% }
-       body { height: 100%; margin: 0; padding: 0 }
-       #map-canvas { height: 100% }
-   </style>
-   <script type="text/javascript"
-           src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBgCp6i8HrezFB6e-u9y-KSoeSKOK4IhzE&sensor=true"></script>
-   <script type="text/javascript">
-     var map;
-     function initialize() {
-       var mapOptions = {
-         center: new google.maps.LatLng(48.209331, 16.381302),
-         zoom: 4
-       };
-       map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-     }
-     google.maps.event.addDomListener(window, 'load', initialize);
- 
-   </script>
-</head>
-<body>
-<div id="map-canvas"></div>
-</body>
+	<head>
+		<script src="jqueryjs"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.0/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" />
+		<script type="text/javascript">
+		   		$.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=sadar&key=AIzaSyC4QTwPmYrSISdVjJXw6YXUaWJVp-G6fFw", function(element){	
+		   		var lat = element.results[0].location.lat;
+				document.getElementById("map-canvas").innerHTML = element.results[0].formatted_address;
+			});
+	</script>
+	</head>
+	<body>
+		<div id="map-canvas"></div>
+		abcd
+	</body>
 </html>
